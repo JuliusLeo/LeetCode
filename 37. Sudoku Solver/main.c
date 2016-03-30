@@ -143,10 +143,11 @@ public:
                 candid.insert(board[BaseI+i][BaseJ+j]);
             }
         //Try each candid
-
-        for(set<char>::iterator it=candid.begin(); it!=candid.end(); ++it)
+        vector<char> vcandid;
+        vcandid.assign(candid.begin(),candid.end());
+        for(int k=0;k<vcandid.size();k++)
         {
-            board[solveI][solveJ]=*it;
+            board[solveI][solveJ]=vcandid[k];
             solveSudoku(board);
             if(AnswerFound)
                 return;
