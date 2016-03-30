@@ -143,14 +143,15 @@ public:
                 candid.insert(board[BaseI+i][BaseJ+j]);
             }
         //Try each candid
-        vector<char> vcandid;
-        vcandid.assign(candid.begin(),candid.end());
-        for(int k=0;k<vcandid.size();k++)
+        for(int k=0;k<9;k++)
         {
-            board[solveI][solveJ]=vcandid[k];
-            solveSudoku(board);
-            if(AnswerFound)
-                return;
+            if(candid.count('0'+k)==0)
+            {
+               board[solveI][solveJ]=vcandid[k];
+               solveSudoku(board);
+               if(AnswerFound)
+                   return;
+            }
         }
          board[solveI][solveJ]='.';
     }
