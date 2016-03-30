@@ -22,6 +22,7 @@ public:
         int maxi_row, maxi_col, maxi_sqr;
         int TotalFullness=0;
         int solveI=-1,solveJ=-1;
+        int i,j;
         if(AnswerFound)
         {
             return;
@@ -41,7 +42,7 @@ public:
         if(TotalFullness==81)
         {
             AnswerFound=true;
-            return
+            return;
         }
         //2. Calculate the "Fullness" for all these 27 structures.
         maxf_row=0;
@@ -114,6 +115,9 @@ public:
 
         //By this time, the square targeted to be solved is [solveI,solveJ]
         //Generate the list of candidates
+
+        if(solveI<0||solveJ<0)
+            return;
         set<char> candid;
         for(i=0;i<9;i++)
         {
@@ -139,13 +143,14 @@ public:
                 candid.insert(board[BaseI+i][BaseJ+j]);
             }
         //Try each candid
-        for(int k=0;k<candid.size();k++)
+
+        for(set<char>::iterator it=candid.begin(); it!=candid.end(); ++it)
         {
-            board[SolveI][SolveJ]=candid[k];
+            board[solveI][solveJ]=*it;
             solveSudoku(board);
             if(AnswerFound)
                 return;
         }
-         board[SolveI][SolveJ]='.';
+         board[solveI][solveJ]='.';
     }
 };
