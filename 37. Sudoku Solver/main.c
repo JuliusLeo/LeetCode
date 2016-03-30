@@ -21,7 +21,7 @@ public:
         int maxf_row, maxf_col, maxf_sqr;
         int maxi_row, maxi_col, maxi_sqr;
         int TotalFullness=0;
-        int solveI,solveJ;
+        int solveI=-1,solveJ=-1;
         if(AnswerFound)
         {
             return;
@@ -114,9 +114,38 @@ public:
 
         //By this time, the square targeted to be solved is [solveI,solveJ]
         //Generate the list of candidates
-        set<char> Candidates;
-        for(i=0;i<9)
+        set<char> candid;
+        for(i=0;i<9;i++)
+        {
+            //Search each colomn
+            if(board[i][solveJ]!='.')
+                candid.insert(board[i][solveJ]);
+        }
+        for(j=0;i<j;i++)
+        {
+            //Search each colomn
+            if(board[solveI][j]!='.')
+                candid.insert(board[solveI][j]);
+        }
+        //number int(solveI/3)*3+int(solveJ/3)
+        //So for small square i=int(solveI/3)*3 to int(solveI/3)*3+2
+        //                    j=int(solveJ/3)*3 to int(solveJ/3)*3+2
 
-
+        int BaseI=int(solveI/3)*3,BaseJ=int(solveJ/3)*3+2;
+        for(i=0;i<=2;i++)
+            for(j=0;j<=2;j++)
+            {
+                if(board[BaseI+i][BaseJ+j]!='.')
+                candid.insert(board[BaseI+i][BaseJ+j]);
+            }
+        //Try each candid
+        for(int k=0;k<candid.size();k++)
+        {
+            board[SolveI][SolveJ]=candid[k];
+            solveSudoku(board);
+            if(AnswerFound)
+                return;
+        }
+         board[SolveI][SolveJ]='.';
     }
 };
